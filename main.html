@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "utf-8>
+	<title> website </title>
+	<meta name="viewpoint" content="width=device-width,initial-scale=1">
+	<script type="text/javascript" src="./static/js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="./static/js/d3.min.js"></script>
+	<link href="./static/css/bootstrap.min.css", type="text/css", rel="stylesheet">
+	<link href="./static/css/dc.css", type="text/css", rel="stylesheet">
+	<link href="./static/css/leaflet.css", type="text/css", rel="stylesheet">
+	<script type="text/javascript" src="./static/js/crossfilter.min.js"></script>
+	<script type="text/javascript" src="./static/js/dc.min.js"></script>
+	<script type="text/javascript" src="./static/js/leaflet.js"></script>
+	<script type="text/javascript" src="./static/js/bootstrap.min.js"></script>
+
+</head>
+
+<style>
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 220px;                  
+  height: 60px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: Orange;  
+  border: 0px;      
+  border-radius: 8px; 
+  pointer-events: none;      
+}
+</style>
+
+<header>
+	
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+        	<img style="max-width:60px"class="media-object" src="./static/images/brand.png">
+    	</a>
+    </div>
+
+    <div class="container-fluid">
+	  <button type="button" class="btn btn-danger" aria-label="Left Align" 
+	  style="margin-top:20px; margin-bottom:5px; margin-right:20px; height:44px">
+			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Start Learning
+	  </button>
+
+	 <ul class="nav navbar-nav navbar-right">
+        
+        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signinModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
+        	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Sign in
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Sign in</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="form-group">
+		            <label for="Username" class="control-label">Username:</label>
+		            <input type="text" class="form-control" id="Username">
+		          </div>
+		          <div class="form-group">
+		            <label for="password" class="control-label">Password:</label>
+		            <input type="text" class="form-control" id="password"></textarea>
+		          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-info">Go!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+		<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signupModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
+			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Sign up
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Sign up</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form>
+		          <div class="form-group">
+		            <label for="Username" class="control-label">Username:</label>
+		            <input type="text" class="form-control" id="Username">
+		          </div>
+		          <div class="form-group">
+		            <label for="password" class="control-label">Password:</label>
+		            <input type="text" class="form-control" id="password"></textarea>
+		          </div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-info">Go!</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+     </ul>
+  </div>
+</header>
+
+<body>
+
+	<div class="container-fluid">
+	
+		<div class="row" style="margin-top:60px">
+			<div class='col-xs-6'>
+				<div class="panel panel-danger" >
+				  <div class="panel-heading">
+				    <h3 class="panel-title">Document Exploration</h3>
+				  </div>
+				  <div class="panel-body">
+				    <div id="map" style="height:300px"></div>
+				  </div>
+				</div>
+			</div>
+
+			<div class='col-xs-6'>
+				<div class="panel panel-danger" >
+				  <div class="panel-heading">
+				    <h3 class="panel-title">Meta Data Analysis</h3>
+				  </div>
+				  <div class="panel-body">
+				    Panel content
+				  </div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class='col-xs-12'>
+					<div class="panel panel-danger" >
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Cluster Analysis</h3>
+					  </div>
+					  <div class="panel-body">
+					    Panel content
+					  </div>
+					</div>
+				</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-danger" >
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Tabular Exploration</h3>
+					  </div>
+					  <div class="panel-body">
+					    Panel content
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		
+		var map = L.map("map").setView([39.7476, -104.5], 10)
+
+		var layer = new L.TileLayer(
+			"http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+		);
+		
+		map.addLayer(layer);
+		map._initPathRoot();
+
+		var div = d3.select("body")
+					.append("div")
+					.attr("class", "tooltip")            
+					.style("opacity", 0)   
+					.style("top", "150px") 
+					.style("left", "0px");
+
+		d3.csv('./data/ZayoHackathonData_Buildings.csv', function(dataset){
+
+			var building_d = dataset;
+
+			var svg = d3.select("#map").select("svg").append("g");
+			
+			var colorScale = d3.scale.linear()
+					   			.domain([0, d3.max(
+					   			building_d, function(d){ 
+					   				return d['Estimated Build Cost']; 
+					   			})])
+					   			.range(["Bisque","DarkRed"]);
+
+			var markers = svg.selectAll("circle")
+				.data(building_d)
+				.enter()
+				.append("circle")
+				.style("stroke", "black")  
+				.style("opacity", .5) 
+				.style("fill", function(d){
+					return colorScale(d['Estimated Build Cost']);
+				})
+				.attr("r", 5);
+
+			var tooltips = svg.selectAll("tooltip")
+					.data(building_d)
+					.enter()
+					.append("tooltip")  
+			console.log(tooltips);
+
+			var popup = markers.on("mouseover", function(d) {        
+							div.transition()
+								.duration(500)    
+								.style("opacity", 0);
+							div.transition()
+								.duration(200)    
+								.style("opacity", .9);
+							div .html(
+								'<br>'+d['Street Address']+'</br>')     
+								.style("left", (d3.event.pageX) + "px")             
+								.style("top", (d3.event.pageY - 80) + "px");
+							})
+							.on('mouseout', function(d){
+							div.transition()
+								.duration(500)
+								.style('opacity', 0)
+						});
+
+			map.on("viewreset", update);
+					
+			update();
+
+			function update() {
+				markers.attr("transform", 
+					function(d) { 
+						if (d['Latitude'] != '' && d['Longitude'] != '' ){
+							return "translate("+ 
+								map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).x +","+ 
+								map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).y +")";
+						}
+					}
+				)		
+				
+			};
+		}
+		);
+	</script>
+	
+
+
+
+
+
+
+
+</body>
+</html>
