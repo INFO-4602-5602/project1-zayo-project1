@@ -2,6 +2,7 @@
 This file is for preprocess csv files for 2nd idea
 """
 import json
+import re
 
 def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='./results.txt'):
     """
@@ -37,7 +38,7 @@ def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='.
             if len(tmp) < 2:
                 continue
             try:
-                profits = float(tmp)
+                profits = float(re.findall(r'[\d|\.]+', infos[2])[0])
             except ValueError:
                 print(tmp)
                 continue
