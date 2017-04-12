@@ -4,7 +4,7 @@ This file is for preprocess csv files for 2nd idea
 import json
 import re
 
-def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='./results.txt'):
+def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='../results/results_2nd.txt'):
     """
     This function will combine information from two files.
     1: Services.csv; 2. Accounts.csv
