@@ -1,0 +1,17 @@
+{
+    "Others": 26514.360000000008,
+    "Energy": 1014.2,
+    "Energy & Manufacturing": 57865.219999999994,
+    "Finance": 289633.8100000003,
+    "Government": 62983.07,
+    "Healthcare": 91168.73999999996,
+    "IT Infrastructure": 390799.77,
+    "Manufacturing": 5599.739999999999,
+    "Media & Content": 947962.5399999996,
+    "Media/Content": 3600.4100000000003,
+    "Other Industry": 239986.16000000035,
+    "Professional Services": 299107.1499999998,
+    "Research & Education": 27413.190000000002,
+    "Telecommunications": 15263379.109999986,
+    "Transportation & Logistics": 9284.369999999999
+}
