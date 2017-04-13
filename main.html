@@ -13,7 +13,10 @@
 	<script type="text/javascript" src="./static/js/dc.min.js"></script>
 	<script type="text/javascript" src="./static/js/leaflet.js"></script>
 	<script type="text/javascript" src="./static/js/bootstrap.min.js"></script>
-
+	<!-- 2nd idea-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/2ndidea.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/2ndidea.js"></script>
 </head>
 
 <style>
@@ -156,6 +159,24 @@ div.tooltip {
 					</div>
 				</div>
 		</div>
+		
+		
+		<div class="row">
+			<div class='col-xs-12'>
+					<div class="panel panel-danger" >
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Revenue Analysis</h3>
+					  </div>
+					  <div class="panel-body">
+					  	<div id="chart2nd" style="height:400px"></div>
+						<script>
+							test2ndidea();
+						</script>
+					  </div>
+					</div>
+				</div>
+		</div>
+
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="panel panel-danger" >
@@ -255,13 +276,5 @@ div.tooltip {
 		}
 		);
 	</script>
-	
-
-
-
-
-
-
-
 </body>
 </html>

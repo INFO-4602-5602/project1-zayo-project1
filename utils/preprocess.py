@@ -4,7 +4,7 @@ This file is for preprocess csv files for 2nd idea
 import json
 import re
 
-def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='../results/results_2nd.txt'):
+def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='../results/results_2nd.csv'):
     """
     This function will combine information from two files.
     1: Services.csv; 2. Accounts.csv
@@ -64,11 +64,24 @@ def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='.
                     ind_prof_dict[ind_name] = acct_ser_dict[acc_id]
 
     # save data to json in file
-    with open(writepath, 'wb') as writef:
-        writef.write(json.dumps(ind_prof_dict,
+    write2csv(writepath, ind_prof_dict)
+
+def write2csv(path, object1):
+    """
+    Write dictionary object into csv format;
+    Parameters:
+        path - the path to save the file
+        object1 - the dictionary object
+    """
+    with open(path, 'w') as writef:
+        for key in object1:
+            writef.write(str(key) + ',' + str(object1[key]) + '\n')
+
+def write2json(path, object1):
+    with open(path, 'wb') as writef:
+        writef.write(json.dumps(object1,
             ensure_ascii=False,sort_keys=True,
             indent=4).encode('utf-8', 'replace'))
-
 
 if __name__ == '__main__':
     import sys
