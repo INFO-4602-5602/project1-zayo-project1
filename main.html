@@ -17,20 +17,28 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<link href="./static/css/2ndidea.css", type="text/css", rel="stylesheet">
 	<script src="./static/js/2ndidea.js"></script>
+	<link href="./static/css/3rdidea.css", type="text/css", rel="stylesheet">
+	<!-- MRR barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/mrr.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/mrr.js"></script>
+	<!-- CPQ barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/cpq.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/cpq.js"></script>
 </head>
 
 <style>
-div.tooltip {   
-  position: absolute;           
-  text-align: center;           
+<!--https://www.w3schools.com/css/css_tooltip.asp-->
+div.tooltip {
   width: 220px;                  
-  height: 60px;                 
-  padding: 2px;             
+  height: 80px;                 
+  padding: 2px;    
+  position: absolute;           
+  text-align: center;                       
   font: 12px sans-serif;        
   background: Orange;  
-  border: 0px;      
-  border-radius: 8px; 
-  pointer-events: none;      
+  border: 0px;           
 }
 </style>
 
@@ -43,79 +51,11 @@ div.tooltip {
     </div>
 
     <div class="container-fluid">
-	  <button type="button" class="btn btn-danger" aria-label="Left Align" 
-	  style="margin-top:20px; margin-bottom:5px; margin-right:20px; height:44px">
-			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Start Learning
+	  <button type="button" href="javascript:RowChart.filterAll();dc.redrawAll();" class="btn btn-danger reset" aria-label="Left Align" 
+	  style="margin-top:20px; margin-bottom:0px; margin-right:20px; height:44px">
+			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Reset
 	  </button>
 
-	 <ul class="nav navbar-nav navbar-right">
-        
-        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signinModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
-        	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Sign in
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Sign in</h4>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="form-group">
-		            <label for="Username" class="control-label">Username:</label>
-		            <input type="text" class="form-control" id="Username">
-		          </div>
-		          <div class="form-group">
-		            <label for="password" class="control-label">Password:</label>
-		            <input type="text" class="form-control" id="password"></textarea>
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-info">Go!</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-
-		<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signupModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
-			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Sign up
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Sign up</h4>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="form-group">
-		            <label for="Username" class="control-label">Username:</label>
-		            <input type="text" class="form-control" id="Username">
-		          </div>
-		          <div class="form-group">
-		            <label for="password" class="control-label">Password:</label>
-		            <input type="text" class="form-control" id="password"></textarea>
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-info">Go!</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-     </ul>
   </div>
 </header>
 
@@ -124,45 +64,63 @@ div.tooltip {
 	<div class="container-fluid">
 	
 		<div class="row" style="margin-top:60px">
-			<div class='col-xs-6'>
+			<div class='col-xs-9'>
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
 				    <h3 class="panel-title">Map</h3>
 				  </div>
 				  <div class="panel-body">
-				    <div id="map" style="height:300px"></div>
+				    <div id="map" style="height:290px"></div>
 				  </div>
 				</div>
 			</div>
 
-			<div class="row" id="control-row">
+			<div class='col-xs-3'>
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
 				    <h3 class="panel-title">Filters</h3>
 				  </div>
-					<div class="col-xs-2 pie-chart">
-					  <h4>Market</h4><div id="market" style="height:300px"></div></h4>
+				  <div class="panel-body">
+				  	<div class="row">
+					  	<div class="col-xs-5 pie-chart" >
+					  	<h4>&nbsp &nbsp Market</h4>
+					  	<div id="market" style="height:250px"></div>
+					</div>
+					  	
 				  </div>
-				<div class="col-xs-2 pie-chart">
-					<h4>State</h4><div id="State" style="height:300px"></div></h4>
-				</div>
+				  </div>
 				</div>
 			</div>
 
 		</div>
+
 		<div class="row">
 			<div class='col-xs-12'>
 					<div class="panel panel-danger" >
 					  <div class="panel-heading">
 					    <h3 class="panel-title">Cluster Analysis</h3>
 					  </div>
-					  <div class="panel-body">
-						  <h4>Monthly Revenue</h4><div id="mrr" style="height:300px"></div></h4>
+					<div class="panel-body">
+					<div class="row">
+						<div class='col-xs-5'>
+						<h4>&emsp; Monthly Revenue by Market</h4><div id="mrr_chart" style="height:250px"></div></h4>
+						  <script>
+                              mrr_barChart();
+						  </script>
 					  </div>
+					</div>
+					<div class="row">
+						<div class='col-xs-12'>
+						<h4>&emsp; CPQ by Industry</h4><div id="CPQ_chart" style="height:250px"></div></h4>
+						<script>
+                            cpq_barChart();
+						</script>
+					</div>
+					</div>
+					</div>
 					</div>
 				</div>
 		</div>
-		
 		
 		<div class="row">
 			<div class='col-xs-12'>
@@ -179,6 +137,22 @@ div.tooltip {
 					</div>
 				</div>
 		</div>
+		<div class="row">
+			<div class='col-xs-12'>
+					<div class="panel panel-danger" >
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Goup Performance Analysis</h3>
+					  </div>
+					  <div class="panel-body">
+					  	<div id="tech-stack-container">
+							<svg id="teck-stack-svg" width="100%" height="600" font-family="sans-serif" font-size="12" text-anchor="middle"/>
+						</div>
+					  </div>
+					</div>
+				</div>
+		</div>
+		<script src="./static/js/d3-legend.min.js"></script>
+		<script src="./static/js/techstack-main.js"></script>
 
 		<div class="row">
 			<div class="col-xs-12">
@@ -191,10 +165,10 @@ div.tooltip {
 						    <thead>
 						        <tr class='header'>
 						            <th>Building ID</th>
+						            <th>Account ID</th>
+						            <th>StageName</th>
 						            <th>Market</th>
-						            <th>Address</th>
-						            <th>Type</th>
-						            <th>Net Class</th>
+						            <th>Industry</th>
 						         </tr>
 						    </thead>
 						</table>
@@ -204,155 +178,6 @@ div.tooltip {
 
 	</div>
 
-	<script type="text/javascript">
-		
-		var map = L.map("map").setView([39.7476, -104.5], 4)
-		var PieChart = dc.pieChart("#market");
-		var PieChart_State = dc.pieChart("#State");
-		var DataTable = dc.dataTable("#data-table");
-		//var BarChart_mrr = dc.barChart('#mrr');
-
-		var layer = new L.TileLayer(
-			"http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-		);
-		
-		map.addLayer(layer);
-		map._initPathRoot();
-
-		var div = d3.select("body")
-					.append("div")  // declare the tooltip div 
-					.attr("class", "tooltip")              // apply the 'tooltip' class
-					.style("opacity", 0)                  // set the opacity to nil	
-					.style("top", "150px") // make sure div is out of the way
-					.style("left", "0px");
-
-		d3.csv('./data/ZayoHackathonData_Buildings.csv', function(dataset){
-            d3.csv('./data/ZayoHackathonData_Services_Original.csv', function(dataset_service){
-
-                var building_d = dataset;
-                var mrr = dataset_service
-
-			var svg = d3.select("#map").select("svg").append("g");
-			minimal = d3.min(building_d, function(d){
-					   				return d['Estimated Build Cost']; });
-			maximal = d3.max(building_d, function(d){
-					   				return d['Estimated Build Cost']; });
-			var colorScale = d3.scale.linear()
-					   			.domain([minimal, maximal])
-					   			.range(["Bisque","DarkRed"]);
-			function m(data) {
-				var markers = svg.selectAll("circle")
-					.data(data)
-					.enter()
-					.append("circle")
-					.style("stroke", "black")
-					.style("opacity", .5)
-					.style("fill", function(d){
-						return colorScale(d['Estimated Build Cost']);
-					})
-					.attr("r", 5);
-
-				var tooltips = svg.selectAll("tooltip")
-						.data(data)
-						.enter()
-						.append("tooltip");
-
-				var popup = markers.on("mouseover", function(d) {
-								div.transition()
-									.duration(500)
-									.style("opacity", 0);
-								div.transition()
-									.duration(200)
-									.style("opacity", .9);
-								div .html(
-									'<br>'+d['Street Address']+'</br>')
-									.style("left", (d3.event.pageX) + "px")
-									.style("top", (d3.event.pageY - 80) + "px");
-								})
-								.on('mouseout', function(d){
-								div.transition()
-									.duration(500)
-									.style('opacity', 0)
-							});
-
-				map.on("viewreset", update);
-
-				// call update function
-				update();
-
-				function update() {
-					markers.attr("transform",
-						function(d) {
-							if (d['Latitude'] != '' && d['Longitude'] != '' ){
-								return "translate("+
-									map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).x +","+
-									map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).y +")";
-							}
-						}
-					)
-
-				};
-			}
-
-			m(building_d);
-
-			var onFilt = function(chart, filter) {
-				d3.select("#map").select("svg").select("g").selectAll("circle").remove();
-		 		m(dim.top(Infinity));
-			};
-
-			d3.csv('./data/ZayoHackathonData_Sites.csv', function(dataset){});
-
-			var ndx = crossfilter(building_d);
-			var all = ndx.groupAll();
-			dim = ndx.dimension(function(d) {return d['Market']});
-			g = dim.group().reduceCount();
-
-			PieChart
-      			.width(150)
-      			.height(150)
-      			.dimension(dim)
-      			.group(g)
-      			.innerRadius(20)
-      			.on("filtered", onFilt);
-
-      		DataTable.dimension(dim)
-	    			.group(function(d) {
-						return '   ';
-					})
-					.size(50)
-					.columns([
-						function(d) { return d['Building ID']; },
-						function(d) { return d['Market']; },
-						function(d) { return d['Street Address']; },
-						function(d) { return d['Type']; },
-						function(d) { return d['Net Classification']; }
-					])
-					.sortBy(function(d){ return d['Net Classification']; })
-					.order(d3.ascending);
-
-                var ndx2 = crossfilter(mrr);
-                var all = ndx2.groupAll();
-                dim_State = ndx2.dimension(function(d) {return d['State']});
-                console.log(dim_State)
-                g_State = dim_State.group().reduceCount();
-
-                PieChart_State
-                    .width(150)
-                    .height(150)
-                    .dimension(dim_State)
-                    .group(g_State)
-                    .innerRadius(20)
-                //.on("filtered", onFilt);
-
-                dc.renderAll();	//show all charts
-
-            });
-
-        });
-
-
-
-	</script>
+	<script type="text/javascript" src = "./static/js/map.js"></script>
 </body>
 </html>
