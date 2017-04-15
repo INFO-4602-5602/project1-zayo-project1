@@ -17,6 +17,14 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<link href="./static/css/2ndidea.css", type="text/css", rel="stylesheet">
 	<script src="./static/js/2ndidea.js"></script>
+	<!-- MRR barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/mrr.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/mrr.js"></script>
+	<!-- CPQ barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/cpq.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/cpq.js"></script>
 </head>
 
 <style>
@@ -144,7 +152,7 @@ div.tooltip {
 					  <h4>Market</h4><div id="market" style="height:300px"></div></h4>
 				  </div>
 				<div class="col-xs-2 pie-chart">
-					<h4>State</h4><div id="State" style="height:300px"></div></h4>
+					<!--<h4>State</h4><div id="State" style="height:300px"></div></h4>-->
 				</div>
 				</div>
 			</div>
@@ -156,9 +164,20 @@ div.tooltip {
 					  <div class="panel-heading">
 					    <h3 class="panel-title">Cluster Analysis</h3>
 					  </div>
-					  <div class="panel-body">
-						  <h4>Monthly Revenue</h4><div id="mrr" style="height:300px"></div></h4>
+					<div class="panel-body">
+					<div class="row">
+						<h4>&emsp; Monthly Revenue by Market</h4><div id="mrr_chart" style="height:300px"></div></h4>
+						  <script>
+                              mrr_barChart();
+						  </script>
 					  </div>
+					<div class="row">
+						<h4>&emsp; CPQ by Industry</h4><div id="CPQ_chart" style="height:300px"></div></h4>
+						<script>
+                            cpq_barChart();
+						</script>
+					</div>
+					</div>
 					</div>
 				</div>
 		</div>
