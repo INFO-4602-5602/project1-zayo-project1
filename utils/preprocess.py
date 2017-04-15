@@ -66,7 +66,7 @@ def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='.
     # save data to json in file
     write2csv(writepath, ind_prof_dict)
 
-def write2csv(path, object1):
+def write2csv(path, object1, separation=','):
     """
     Write dictionary object into csv format;
     Parameters:
@@ -75,7 +75,7 @@ def write2csv(path, object1):
     """
     with open(path, 'w') as writef:
         for key in object1:
-            writef.write(str(key) + ',' + str(object1[key]) + '\n')
+            writef.write(str(key) + separation + str(object1[key]) + '\n')
 
 def write2json(path, object1):
     with open(path, 'wb') as writef:
@@ -118,7 +118,23 @@ def cal_group(ser_file, group_filter=None,  writepath='../results/results_3rd.cs
     write2csv(writepath, group_profits)
     print(group_profits)
 
+def built_cost(blt_file, state_filter=set(['GA', 'TX', 'CO']), writepath='../results/results_4rd.tsv'):
+    blt_cost = dict()
+    with open(writepath, 'w') as writefile:
+        with open(blt_file) as datafile:
+            datafile.readline()
+            for line in datafile:
+                infos = line.split('\t')
+                state = infos[4].strip()
+                if state_filter and state not in state_filter:
+                    continue
+                status = infos[8].strip()
+                net_prxi = infos[11].strip()
+                cost = infos[12].strip()
+                writefile.write(state + '\t' + status + '\t' + net_prxi + '\t' + cost + '\n')
+
 if __name__ == '__main__':
     import sys
-    cal_data(sys.argv[1], sys.argv[2])
+    #cal_data(sys.argv[1], sys.argv[2])
     #cal_group(sys.argv[1])
+    built_cost(sys.argv[1])
