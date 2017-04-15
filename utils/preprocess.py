@@ -32,7 +32,7 @@ def cal_data(acct_file, ser_file, ind_filter=None, acc_filter=None, writepath='.
         serf.readline() # skip the 1st line of column names
         for line in serf:
             # parse each line
-            infos = line.split(',')
+            infos = line.split('\t')
 
             tmp = infos[2].split('$')[1].strip()
             if len(tmp) < 2:
@@ -83,6 +83,42 @@ def write2json(path, object1):
             ensure_ascii=False,sort_keys=True,
             indent=4).encode('utf-8', 'replace'))
 
+def cal_group(ser_file, group_filter=None,  writepath='../results/results_3rd.csv'):
+    """
+    This function calculates how much money each product group earn
+
+    Parameters:
+        ser_file - Services.csv path
+        group_filter - the filter set for keeping groups
+        writepath - the file where the results will be saved
+    """
+    group_profits = dict()
+    with open(ser_file) as datafile:
+        datafile.readline() # skip the 1st line
+        for line in datafile:
+            infos = line.split('\t')
+
+            tmp = infos[2].split('$')[1].strip()
+            if len(tmp) < 2:
+                continue
+            try:
+                profits = float(re.findall(r'[\d|\.]+', infos[2])[0])
+            except ValueError:
+                print(tmp)
+                continue
+
+            group_id = infos[4].strip()
+            if len(group_id) < 3:
+                continue
+            if group_id in group_profits:
+                group_profits[group_id] += profits
+            else:
+                group_profits[group_id] = profits
+    # Save to file
+    write2csv(writepath, group_profits)
+    print(group_profits)
+
 if __name__ == '__main__':
     import sys
     cal_data(sys.argv[1], sys.argv[2])
+    #cal_group(sys.argv[1])
