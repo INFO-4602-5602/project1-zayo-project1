@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = "en">
 <head>
-	<meta charset = "utf-8>
+	<meta charset = "utf-8">
 	<title> website </title>
 	<meta name="viewpoint" content="width=device-width,initial-scale=1">
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
@@ -29,7 +29,10 @@
 	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<link href="./static/css/cpq.css", type="text/css", rel="stylesheet">
 	<script src="./static/js/cpq.js"></script>
-
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link href="./static/css/scatter.css", type="text/css", rel="stylesheet">
+	
 </head>
 
 <style>
@@ -182,6 +185,46 @@ div.tooltip {
 
 	</div>
 
-	<script type="text/javascript" src = "./static/js/map.js"></script>
+	<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-danger" >
+					  <div class="panel-heading">
+					    <h6 class="panel-title">Proximity Networking</h6>
+					 
+					  </div>
+					  <div class="panel-body">
+					  <div id="chart4th" "></div>
+					  <div id="includedContent"></div>
+
+              			<iframe src="scatter.html" 
+             				 width="1750" 
+             				 height="600" 
+             				 frameBorder="0" 
+             				 align="right">
+                		</iframe>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript" src = "./static/js/map.js">
+		
+		d3.tsv("../results/results_4rd.tsv",
+	        function(error, data) {
+	            callbackError = error;
+	            callbackData = data;
+	            //data is array of data:
+
+	            //Example: console log the state of the first data point
+	            console.log(data[0].State);
+	            console.log(data.length);  //prints out '28542' 
+
+	</script>
+
+
+
 </body>
+
+   
 </html>
