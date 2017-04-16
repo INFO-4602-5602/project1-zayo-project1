@@ -1,6 +1,9 @@
+		
+
 		//define some vis: Map, piechart and table
 		//resource code from: http://leafletjs.com/
 		var map = L.map("map").setView([35.0997, -94.5786], 5); //set default coordinate and zoom level
+		var markers = new L.FeatureGroup(); //for paning to current filter
 		var DataTable = dc.dataTable("#data-table");
 		var PieChart_market = dc.pieChart("#market");
 
@@ -72,7 +75,8 @@
 					)		
 					
 				};
-			}	
+			}
+
 
 			var building_d = dataset;
 			//add svg to map div
@@ -83,7 +87,18 @@
 			var filt = function(chart, filter) { //connect filter and map
 				d3.select("#map").select("svg").select("g").selectAll("circle").remove(); //filter, remove all circle DOMs
 		 		mapMark(dim.top(Infinity)); //add new markers based on filter result
+
+		 		//zoom map to show current filter
+		 		var arrBounds = [];
+		 		_.each(dim.top(Infinity), function (d) {
+			        if (d['Latitude'] != '' && d['Longtitude'] != '' ){			       
+						arrBounds.push([d['Latitude'],d['Longtitude']]);	
+					}
+		 		})
+				map.fitBounds(arrBounds);
 			};
+
+			//Opp-002169 was deleted from the csv. It was an outlier in Oregon that was causing the map to zoom incorrectly
 
 			//source code of next part: https://github.com/dc-js/dc.js/blob/master/web/examples/pie.html
 			var ndx = crossfilter(building_d);
@@ -112,7 +127,7 @@
 					])
 					.order(d3.ascending);
 			
-      		 dc.renderAll();
+      		 dc.renderAll();		    
 
 		});
 
