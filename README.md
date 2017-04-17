@@ -2,12 +2,12 @@
 Welcome come to our Zayo project page :smile::raised_hands:. All the visualizations are based on D3 (**version 4**).
 
 ## Catalog
-* [Team members & Contributions](##Team members and contributions)
-* [How to run](##How to run)
-* [Information used](##Information used)
-* [Design Process](##Design Process)
-* [Checking List](##Checking List)
-* [Unique Visualizations](##Unique Visualizations)
+* [Team members & Contributions](#Team members and contributions)
+* [How to run](#How to run)
+* [Information used](#Information used)
+* [Design Process](#Design Process)
+* [Checking List](#Checking List)
+* [Unique Visualizations](#Unique Visualizations)
     * [Visualization 1 : Map and Filter](#Visualization 1: Map and Filter)
     * [Visualization 2: Monthly Revenue and CPQ Analysis](#Visualization 2: Monthly Revenue and CPQ Analysis)
     * [Visualization 3: Revenue Analysis](#Visualization 3: Revenue Analysis)
@@ -16,8 +16,6 @@ Welcome come to our Zayo project page :smile::raised_hands:. All the visualizati
     * [Visualization 6: Not used](#Visualization 6: Not used)
 * [References](#References)
 
-
-Plz don’t attach image, if you need, attach URL!!!
 ## Team members and contributions
 * Paige Johnson:
 	* Participate in conceptualizing the visualizations
