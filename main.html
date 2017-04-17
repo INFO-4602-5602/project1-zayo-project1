@@ -133,7 +133,7 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 			<div class='col-xs-6'>
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
-				    <h3 class="panel-title">Document Exploration</h3>
+				    <h3 class="panel-title">Map</h3>
 				  </div>
 				  <div class="panel-body">
 				    <div id="map" style="height:300px"></div>
@@ -141,14 +141,17 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 				</div>
 			</div>
 
-			<div class='col-xs-6'>
+			<div class="row" id="control-row">
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
-				    <h3 class="panel-title">Meta Data Analysis</h3>
+				    <h3 class="panel-title">Filters</h3>
 				  </div>
-				  <div class="panel-body">
-				    Panel content
+					<div class="col-xs-2 pie-chart">
+					  <h4>Market</h4><div id="market" style="height:300px"></div></h4>
 				  </div>
+				<div class="col-xs-2 pie-chart">
+					<h4>State</h4><div id="State" style="height:300px"></div></h4>
+				</div>
 				</div>
 			</div>
 
@@ -160,7 +163,7 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 					    <h3 class="panel-title">Cluster Analysis</h3>
 					  </div>
 					  <div class="panel-body">
-					    Panel content
+						  <h4>Monthly Revenue</h4><div id="mrr" style="height:300px"></div></h4>
 					  </div>
 					</div>
 				</div>
@@ -205,7 +208,17 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 					    <h3 class="panel-title">Tabular Exploration</h3>
 					  </div>
 					  <div class="panel-body">
-					    Panel content
+					    <table class="table table-hover dc-data-table" id="data-table">
+						    <thead>
+						        <tr class='header'>
+						            <th>Building ID</th>
+						            <th>Market</th>
+						            <th>Address</th>
+						            <th>Type</th>
+						            <th>Net Class</th>
+						         </tr>
+						    </thead>
+						</table>
 				</div>
 			</div>
 		</div>
@@ -214,7 +227,11 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 
 	<script type="text/javascript">
 		
-		var map = L.map("map").setView([39.7476, -104.5], 10)
+		var map = L.map("map").setView([39.7476, -104.5], 4)
+		var PieChart = dc.pieChart("#market");
+		var PieChart_State = dc.pieChart("#State");
+		var DataTable = dc.dataTable("#data-table");
+		//var BarChart_mrr = dc.barChart('#mrr');
 
 		var layer = new L.TileLayer(
 			"http://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -224,105 +241,135 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 		map._initPathRoot();
 
 		var div = d3.select("body")
-					.append("div")
-					.attr("class", "tooltip")            
-					.style("opacity", 0)   
-					.style("top", "150px") 
+					.append("div")  // declare the tooltip div 
+					.attr("class", "tooltip")              // apply the 'tooltip' class
+					.style("opacity", 0)                  // set the opacity to nil	
+					.style("top", "150px") // make sure div is out of the way
 					.style("left", "0px");
 
 		d3.csv('./data/ZayoHackathonData_Buildings.csv', function(dataset){
+            d3.csv('./data/ZayoHackathonData_Services_Original.csv', function(dataset_service){
 
-			var building_d = dataset;
+                var building_d = dataset;
+                var mrr = dataset_service
 
 			var svg = d3.select("#map").select("svg").append("g");
-			
+			minimal = d3.min(building_d, function(d){
+					   				return d['Estimated Build Cost']; });
+			maximal = d3.max(building_d, function(d){
+					   				return d['Estimated Build Cost']; });
 			var colorScale = d3.scale.linear()
-					   			.domain([0, d3.max(
-					   			building_d, function(d){ 
-					   				return d['Estimated Build Cost']; 
-					   			})])
+					   			.domain([minimal, maximal])
 					   			.range(["Bisque","DarkRed"]);
-
-			var markers = svg.selectAll("circle")
-				.data(building_d)
-				.enter()
-				.append("circle")
-				.style("stroke", "black")  
-				.style("opacity", .5) 
-				.style("fill", function(d){
-					return colorScale(d['Estimated Build Cost']);
-				})
-				.attr("r", 5);
-
-			var tooltips = svg.selectAll("tooltip")
-					.data(building_d)
+			function m(data) {
+				var markers = svg.selectAll("circle")
+					.data(data)
 					.enter()
-					.append("tooltip")  
-			console.log(tooltips);
+					.append("circle")
+					.style("stroke", "black")
+					.style("opacity", .5)
+					.style("fill", function(d){
+						return colorScale(d['Estimated Build Cost']);
+					})
+					.attr("r", 5);
 
-			var popup = markers.on("mouseover", function(d) {        
-							div.transition()
-								.duration(500)    
-								.style("opacity", 0);
-							div.transition()
-								.duration(200)    
-								.style("opacity", .9);
-							div .html(
-								'<br>'+d['Street Address']+'</br>')     
-								.style("left", (d3.event.pageX) + "px")             
-								.style("top", (d3.event.pageY - 80) + "px");
-							})
-							.on('mouseout', function(d){
-							div.transition()
-								.duration(500)
-								.style('opacity', 0)
-						});
+				var tooltips = svg.selectAll("tooltip")
+						.data(data)
+						.enter()
+						.append("tooltip");
 
-			map.on("viewreset", update);
-					
-			update();
+				var popup = markers.on("mouseover", function(d) {
+								div.transition()
+									.duration(500)
+									.style("opacity", 0);
+								div.transition()
+									.duration(200)
+									.style("opacity", .9);
+								div .html(
+									'<br>'+d['Street Address']+'</br>')
+									.style("left", (d3.event.pageX) + "px")
+									.style("top", (d3.event.pageY - 80) + "px");
+								})
+								.on('mouseout', function(d){
+								div.transition()
+									.duration(500)
+									.style('opacity', 0)
+							});
 
-			function update() {
-				markers.attr("transform", 
-					function(d) { 
-						if (d['Latitude'] != '' && d['Longitude'] != '' ){
-							return "translate("+ 
-								map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).x +","+ 
-								map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).y +")";
+				map.on("viewreset", update);
+
+				// call update function
+				update();
+
+				function update() {
+					markers.attr("transform",
+						function(d) {
+							if (d['Latitude'] != '' && d['Longitude'] != '' ){
+								return "translate("+
+									map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).x +","+
+									map.latLngToLayerPoint(L.latLng(d['Latitude'],d['Longitude'])).y +")";
+							}
 						}
-					}
-				)		
-				
+					)
+
+				};
+			}
+
+			m(building_d);
+
+			var onFilt = function(chart, filter) {
+				d3.select("#map").select("svg").select("g").selectAll("circle").remove();
+		 		m(dim.top(Infinity));
 			};
-		}
-		);
+			d3.csv('./data/ZayoHackathonData_Sites.csv', function(dataset){});
 
+			var ndx = crossfilter(building_d);
+			var all = ndx.groupAll();
+			dim = ndx.dimension(function(d) {return d['Market']});
+			g = dim.group().reduceCount();
 
-		d3.tsv("../results/results_4rd.tsv",
-	        function(error, data) {
-	            callbackError = error;
-	            callbackData = data;
-	            //data is array of data:
+			PieChart
+      			.width(150)
+      			.height(150)
+      			.dimension(dim)
+      			.group(g)
+      			.innerRadius(20)
+      			.on("filtered", onFilt);
 
-	            //Example: console log the state of the first data point
-	            console.log(data[0].State);
-	            console.log(data.length);  //prints out '28542'
-			
+      		DataTable.dimension(dim)
+	    			.group(function(d) {
+						return '   ';
+					})
+					.size(50)
+					.columns([
+						function(d) { return d['Building ID']; },
+						function(d) { return d['Market']; },
+						function(d) { return d['Street Address']; },
+						function(d) { return d['Type']; },
+						function(d) { return d['Net Classification']; }
+					])
+					.sortBy(function(d){ return d['Net Classification']; })
+					.order(d3.ascending);
 
-			
-			//Make scatter plot!	      	  
-	    
-	      
+                var ndx2 = crossfilter(mrr);
+                var all = ndx2.groupAll();
+                dim_State = ndx2.dimension(function(d) {return d['State']});
+                console.log(dim_State)
+                g_State = dim_State.group().reduceCount();
 
+                PieChart_State
+                    .width(150)
+                    .height(150)
+                    .dimension(dim_State)
+                    .group(g_State)
+                    .innerRadius(20)
+                //.on("filtered", onFilt);
 
+                dc.renderAll();	//show all charts
 
-    });
+            });
 
-
-
-
-
-
+        });
 
 
 
