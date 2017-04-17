@@ -33,6 +33,11 @@ div.tooltip {
   border-radius: 8px; 
   pointer-events: none;      
 }
+        
+body {font-family: monospace; line-height: 160%; font-size: 18px; }
+ul {list-style: none; margin: 0; padding: 0;}
+li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; margin: 0;}
+        
 </style>
 
 <header>
@@ -316,7 +321,6 @@ div.tooltip {
 				d3.select("#map").select("svg").select("g").selectAll("circle").remove();
 		 		m(dim.top(Infinity));
 			};
-
 			d3.csv('./data/ZayoHackathonData_Sites.csv', function(dataset){});
 
 			var ndx = crossfilter(building_d);
