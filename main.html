@@ -4,6 +4,9 @@
 	<meta charset = "utf-8>
 	<title> website </title>
 	<meta name="viewpoint" content="width=device-width,initial-scale=1">
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+
+	<script type="text/javascript" src="js/underscore-min.js"></script>
 	<script type="text/javascript" src="./static/js/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="./static/js/d3.min.js"></script>
 	<link href="./static/css/bootstrap.min.css", type="text/css", rel="stylesheet">
@@ -18,20 +21,29 @@
 	<link href="./static/css/2ndidea.css", type="text/css", rel="stylesheet">
 	<script src="./static/js/2ndidea.js"></script>
 	<link href="./static/css/3rdidea.css", type="text/css", rel="stylesheet">
+
+	<!-- MRR barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/mrr.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/mrr.js"></script>
+	<!-- CPQ barchart-->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<link href="./static/css/cpq.css", type="text/css", rel="stylesheet">
+	<script src="./static/js/cpq.js"></script>
+
 </head>
 
 <style>
-div.tooltip {   
-  position: absolute;           
-  text-align: center;           
+<!--https://www.w3schools.com/css/css_tooltip.asp-->
+div.tooltip {
   width: 220px;                  
-  height: 60px;                 
-  padding: 2px;             
+  height: 80px;                 
+  padding: 2px;    
+  position: absolute;           
+  text-align: center;                       
   font: 12px sans-serif;        
   background: Orange;  
-  border: 0px;      
-  border-radius: 8px; 
-  pointer-events: none;      
+  border: 0px;           
 }
         
 body {font-family: monospace; line-height: 160%; font-size: 18px; }
@@ -49,79 +61,11 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
     </div>
 
     <div class="container-fluid">
-	  <button type="button" class="btn btn-danger" aria-label="Left Align" 
-	  style="margin-top:20px; margin-bottom:5px; margin-right:20px; height:44px">
-			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Start Learning
+	  <button type="button" href="javascript:RowChart.filterAll();dc.redrawAll();" class="btn btn-danger reset" aria-label="Left Align" 
+	  style="margin-top:20px; margin-bottom:0px; margin-right:20px; height:44px">
+			<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Reset
 	  </button>
 
-	 <ul class="nav navbar-nav navbar-right">
-        
-        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signinModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
-        	<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Sign in
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Sign in</h4>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="form-group">
-		            <label for="Username" class="control-label">Username:</label>
-		            <input type="text" class="form-control" id="Username">
-		          </div>
-		          <div class="form-group">
-		            <label for="password" class="control-label">Password:</label>
-		            <input type="text" class="form-control" id="password"></textarea>
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-info">Go!</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-
-		<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#signupModal" style="margin-top:20px; margin-bottom:5px; margin-right:15px; height:44px">
-			<span class="glyphicon glyphicon-record" aria-hidden="true"></span> Sign up
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Sign up</h4>
-		      </div>
-		      <div class="modal-body">
-		        <form>
-		          <div class="form-group">
-		            <label for="Username" class="control-label">Username:</label>
-		            <input type="text" class="form-control" id="Username">
-		          </div>
-		          <div class="form-group">
-		            <label for="password" class="control-label">Password:</label>
-		            <input type="text" class="form-control" id="password"></textarea>
-		          </div>
-		        </form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-info">Go!</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-     </ul>
   </div>
 </header>
 
@@ -130,41 +74,60 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 	<div class="container-fluid">
 	
 		<div class="row" style="margin-top:60px">
-			<div class='col-xs-6'>
+			<div class='col-xs-9'>
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
 				    <h3 class="panel-title">Map</h3>
 				  </div>
 				  <div class="panel-body">
-				    <div id="map" style="height:300px"></div>
+				    <div id="map" style="height:290px"></div>
 				  </div>
 				</div>
 			</div>
 
-			<div class="row" id="control-row">
+			<div class='col-xs-3'>
 				<div class="panel panel-danger" >
 				  <div class="panel-heading">
 				    <h3 class="panel-title">Filters</h3>
 				  </div>
-					<div class="col-xs-2 pie-chart">
-					  <h4>Market</h4><div id="market" style="height:300px"></div></h4>
+				  <div class="panel-body">
+				  	<div class="row">
+					  	<div class="col-xs-5 pie-chart" >
+					  	<h4>&nbsp &nbsp Market</h4>
+					  	<div id="market" style="height:250px"></div>
+					</div>
+					  	
 				  </div>
-				<div class="col-xs-2 pie-chart">
-					<h4>State</h4><div id="State" style="height:300px"></div></h4>
-				</div>
+				  </div>
 				</div>
 			</div>
 
 		</div>
+
 		<div class="row">
 			<div class='col-xs-12'>
 					<div class="panel panel-danger" >
 					  <div class="panel-heading">
-					    <h3 class="panel-title">Cluster Analysis</h3>
+					    <h3 class="panel-title">Monthly Revenue and CPQ Analysis</h3>
 					  </div>
-					  <div class="panel-body">
-						  <h4>Monthly Revenue</h4><div id="mrr" style="height:300px"></div></h4>
+					<div class="panel-body">
+					<div class="row">
+						<div class='col-xs-5'>
+						<h4>&emsp; Monthly Revenue by Market</h4><div id="mrr_chart" style="height:250px"></div></h4>
+						  <script>
+                              mrr_barChart();
+						  </script>
 					  </div>
+					</div>
+					<div class="row">
+						<div class='col-xs-12'>
+						<h4>&emsp; CPQ by Industry</h4><div id="CPQ_chart" style="height:250px"></div></h4>
+						<script>
+                            cpq_barChart();
+						</script>
+					</div>
+					</div>
+					</div>
 					</div>
 				</div>
 		</div>
@@ -188,7 +151,9 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 			<div class='col-xs-12'>
 					<div class="panel panel-danger" >
 					  <div class="panel-heading">
-					    <h3 class="panel-title">Goup Performance Analysis</h3>
+
+					    <h3 class="panel-title">Group Performance Analysis</h3>
+
 					  </div>
 					  <div class="panel-body">
 					  	<div id="tech-stack-container">
@@ -212,10 +177,10 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 						    <thead>
 						        <tr class='header'>
 						            <th>Building ID</th>
+						            <th>Account ID</th>
+						            <th>StageName</th>
 						            <th>Market</th>
-						            <th>Address</th>
-						            <th>Type</th>
-						            <th>Net Class</th>
+						            <th>Industry</th>
 						         </tr>
 						    </thead>
 						</table>
@@ -225,6 +190,9 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 
 	</div>
 
+	<script type="text/javascript" src = "./static/js/map.js"></script>
+                                                           
+<!--
 	<script type="text/javascript">
 		
 		var map = L.map("map").setView([39.7476, -104.5], 4)
@@ -374,5 +342,6 @@ li {display: inline-block; width: 40px; padding: 10px; background-color: #eee; m
 
 
 	</script>
+-->
 </body>
 </html>
