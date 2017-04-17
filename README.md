@@ -13,13 +13,14 @@ Welcome come to our Zayo project page :smile::raised_hands:. All the visualizati
     * [Visualization 3: Revenue Analysis](#Visualization 3: Revenue Analysis)
     * [Visualization 4: Group Performance Analysis](#Visualization 4: Group Performance Analysis)
     * [Visualization 5: Tabular Exploration](#Visualization 5: Tabular Exploration)
-    * [Visualization 6: Not used](#Visualization 6: Not used)
+    * [Visualization 6: Not used](#Visualization 6: Not used due to linear data)
 * [References](#References)
 
 ## Team members and contributions
 * Paige Johnson:
 	* Participate in conceptualizing the visualizations
-	* 6th Visualization
+	* 6th Visualization 
+	* Added Responsive Bounded View Functionality to 1st Visualization
 	* Documentation
 * Xiaolei Huang:
 	* Data Preprocessing: wrote python script to extract and calculate data from multiple tables.
@@ -82,11 +83,11 @@ Finally, we combined all these visualizations into a systematic **dashboard**. A
 ## Unique Visualizations
 ### Visualization 1: Map and Filter
 
-The first visualization is combined by two parts -  Map and filter. For the map, we visualize the locations of each account with steel blue dots. It is easy to tell almost all of customers are clustered around three main markets which are Denver, Atlanta and Dallas. Because there is possibility that one building may contain several customers. So we set the opacity of dots to represent how many users in this building. When hovering on each dot, tooltip includes the building address, city and postal code will show. The donut-looking filter beside the map is used to filter the dots on the map based on markets. When change selection by filter, the map will zoom to the most appropriate level.
+The first visualization is combined by two parts -  Map and filter. For the map, we visualize the locations of each account with steel blue dots. It is easy to tell almost all of customers are clustered around three main markets which are Denver, Atlanta and Dallas. Because there is a possibility that one building may contain several customers, we set the opacity of dots to represent how many users are in building. When hovering on each dot, a tooltip that includes the building address, city and postal code will show. The donut-looking filter beside the map is used to filter the dots on the map based on markets. When change selection by filter, the map will zoom to the most appropriate level.
 
 ### Visualization 2: Monthly Revenue and CPQ Analysis
 
-The first visualization represented how much monthly revenue was received from the three states, Colorado, Texas and Georgia. We used a barchart to represent this data. According to the data and visualization Atlanta makes the biggest monthly revenue out of 3 states. And Dallas scores the 2nd. The 2nd bar chart shows the relationship between Industry and CPQ. In data file I used “X36 NPV List” attribute as it is the sum of “X36 MRC List” and “X36 NPV List”. And with this data the visualization represents CPQ by each industry. And the Telecommunication has the highest CPQ out of all the industries. 2nd and 3rd IT Infrastructure and Finance respectively. Other industries besides top 3 are mostly low in CPQ.
+The first visualization represented how much monthly revenue was received from the three states, Colorado, Texas and Georgia. We used a barchart to represent this data. According to the data and visualization Atlanta makes the biggest monthly revenue out of 3 states. And Dallas scores the 2nd. The 2nd bar chart shows the relationship between Industry and CPQ. In data file we used “X36 NPV List” attribute as it is the sum of “X36 MRC List” and “X36 NPV List”. And with this data the visualization represents CPQ by each industry. And the Telecommunication has the highest CPQ out of all the industries. 2nd and 3rd IT Infrastructure and Finance respectively. Other industries besides top 3 are mostly low in CPQ.
 
 
 ### Visualization 3: Revenue Analysis
@@ -100,11 +101,9 @@ This part represented the different networks used by Zayo. Each circle represent
 ### Visualization 5: Tabular Exploration
 This is a table looking visualization. It shows Building ID, Account ID, StageName, Market and Industry in the record format. This table can also be filtered by the map market filter. According to this part, we can see the distribution of StageName and Industry on different market. For example, if we see that for Denver, most of accounts are on success stage, it may indicate that this market has more potential target customers. Or for Dallas, customers in Telecom industry are the most, and based on other visualizations, Telecom customers can provide the most benefits, then it may also indicate more target clients are in this area.
 
-### Visualization 6: Not used
+### Visualization 6: Scatter Plot
 
-
-
-We did not incorporate this visualization because it was not valuable information. We learned that proximity networking in Colorado was more expensive than the other two States. The price was expensive with large buildings (e.g. hospitals) with On Zayo Networks but overall, as the graph shows it was linear because the more proximity you need, the more expensive it will be to build.
+We did not incorporate this visualization because it presented no valuable information. We learned that proximity networking in Colorado was more expensive than the other two states. The price was expensive with large buildings (e.g. hospitals) with On Zayo Networks but overall, as the graph is linear because Zayo does not use any other variables other than proximity to the network.
 
 ## References
 * For the bootstrap page:
