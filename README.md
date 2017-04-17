@@ -8,12 +8,12 @@ Welcome come to our Zayo project page :smile::raised_hands:. All the visualizati
 * [Design Process](##Design Process)
 * [Checking List](##Checking List)
 * [Unique Visualizations](##Unique Visualizations)
-    * [Visualization 1 : Map and Filter](###Visualization 1 : Map and Filter)
-    * [Visualization 2: Monthly Revenue and CPQ Analysis](###Visualization 2: Monthly Revenue and CPQ Analysis)
-    * [Visualization 3: Revenue Analysis](###Visualization 3: Revenue Analysis)
-    * [Visualization 4: Group Performance Analysis](###Visualization 4: Group Performance Analysis)
-    * [Visualization 5: Tabular Exploration](###Visualization 5: Tabular Exploration)
-    * [Visualization 6: Not used](###Visualization 6: Not used)
+    * [Visualization 1 : Map and Filter](#Visualization 1: Map and Filter)
+    * [Visualization 2: Monthly Revenue and CPQ Analysis](#Visualization 2: Monthly Revenue and CPQ Analysis)
+    * [Visualization 3: Revenue Analysis](#Visualization 3: Revenue Analysis)
+    * [Visualization 4: Group Performance Analysis](#Visualization 4: Group Performance Analysis)
+    * [Visualization 5: Tabular Exploration](#Visualization 5: Tabular Exploration)
+    * [Visualization 6: Not used](#Visualization 6: Not used)
 * [References](#References)
 
 
@@ -24,10 +24,9 @@ Plz don’t attach image, if you need, attach URL!!!
 	* 6th Visualization
 	* Documentation
 * Xiaolei Huang:
-* Data Preprocessing: wrote python script to extract and calculate data from multiple tables.
+	* Data Preprocessing: wrote python script to extract and calculate data from multiple tables.
 	* Participate in building visualization for 3rd & 4th Visualizations.
 	* Documentation: wrote and formatted markdown documentations.
-
 * Camille Owens:
 	* Worked on the scatter plot.
 	* Helped with conceptualizing the visualizations.
@@ -83,7 +82,7 @@ Finally, we combined all these visualizations into a systematic **dashboard**. A
 - [x] Style: We used each panel to show different visualization. Each panel shares the same style. For example,  there is a panel that shows filter visualization and panel that shows analysis of the revenue.
 
 ## Unique Visualizations
-### Visualization 1 : Map and Filter
+### Visualization 1: Map and Filter
 
 The first visualization is combined by two parts -  Map and filter. For the map, we visualize the locations of each account with steel blue dots. It is easy to tell almost all of customers are clustered around three main markets which are Denver, Atlanta and Dallas. Because there is possibility that one building may contain several customers. So we set the opacity of dots to represent how many users in this building. When hovering on each dot, tooltip includes the building address, city and postal code will show. The donut-looking filter beside the map is used to filter the dots on the map based on markets. When change selection by filter, the map will zoom to the most appropriate level.
 
